@@ -1,4 +1,4 @@
-<%= form_with(model: post) do |form| %>
+<%= form_with(model: post, html: {id: "post"}) do |form| %>
   <% if post.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -20,6 +20,22 @@
     <%= form.label :body, style: "display: block" %>
     <%= form.text_field :body %>
   </div>
+  <script>
+      var editor = new EditorJS({
+          holder: 'editorjs',
+          tools: {
+              header: Header,
+              quote: Quote,
+          }
+      });
+  </script>
+
+  <script defer="true" type="text/javascript" charset="utf-8">
+    document.getElementById("post").onsubmit = async function handleOnSubmit(e) {
+        let data = await editor.save();
+        console.log(data);
+    };
+  </script>
 
   <div>
     <%= form.submit %>

@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comments = @post.comments.all
   end
 
   # GET /posts/new
@@ -25,6 +26,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @comments = @post.comments.all
 
     respond_to do |format|
       if @post.save

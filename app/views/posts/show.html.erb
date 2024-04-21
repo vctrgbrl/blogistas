@@ -3,6 +3,22 @@
 <%= render @post %>
 
 <div>
+  <h5>Adicionar comentário</h5>
+  <%= form_with model: [@post,@post.comments.build]  do |form| %>
+    <%= form.text_field :body %>
+    <%= form.submit :comment %>
+  <% end %>
+</div>
+
+<div>
+  <ul>
+    <% @comments.each do |comment| %>
+      <li><%= comment.body %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div>
   <%= link_to "Edit this post", edit_post_path(@post) %> |
   <%= link_to "Back to posts", posts_path %>
 
