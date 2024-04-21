@@ -12,26 +12,40 @@
   <% end %>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.label :title, "Título", style: "display: block" %>
+    <%= form.text_field :title, class: "form-control"%>
   </div>
 
   <div>
-    <%= form.file_field :thumbnail %>
+    <%= form.label :thumbnail, "Thumbnail" %>
+    <%= form.file_field :thumbnail, class: "form-control" %>
+  </div>
+
+  <div>
+    <label for="">Arquivo Markdown</label>
+    <input type="file" class="form-control" id="markdown-file">
   </div>
 
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.rich_text_area :content %>
+    <%= form.rich_text_area :content, class: "form-control"%>
   </div>
   <script defer="true" type="text/javascript" charset="utf-8">
-    document.getElementById("post").onsubmit = async function handleOnSubmit(e) {
-        // let data = await editor.save();
-        // console.log(data);
-    };
+    function OnLoad(event) {
+        const converter = new showdown.Converter();
+        const html = converter.makeHtml(event.target.result);
+        var element = document.querySelector("trix-editor");
+        element.editor.insertHTML(html);
+    }
+    document.getElementById("markdown-file").addEventListener("change", function handleAddFile(f) {
+        if (this.files.length === 0) return;
+        const reader = new FileReader();
+        reader.onload = OnLoad;
+        reader.readAsText(this.files[0]);
+    });
   </script>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -2,11 +2,11 @@
 
 <%= render @post %>
 
+<!--<div>-->
+<!--  <%#= link_to "Edit this post", edit_post_path(@post) if @user_owns %> |-->
+  <%#= link_to "Back to posts", posts_path %>
+
+  <%#= button_to "Destroy this post", @post, method: :delete if @user_owns %>
+<!--</div>-->
 <%= render "comments/form" %>
 <%= render "comments/index" %>
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) if @user_owns %> |
-  <%= link_to "Back to posts", posts_path %>
-
-  <%= button_to "Destroy this post", @post, method: :delete if @user_owns %>
-</div>

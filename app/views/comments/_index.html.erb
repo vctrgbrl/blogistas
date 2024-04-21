@@ -1,7 +1,10 @@
 <div>
-  <ul>
+  <% unless @comments.empty? %>
+    <h3>Comentários</h3>
+  <% end %>
+  <div>
     <% @comments.each do |comment| %>
-      <li><%= comment.body %> <span><%= comment.user_id %></span></li>
+      <%= render 'comments/comment', comment: comment %>
     <% end %>
-  </ul>
+  </div>
 </div>
