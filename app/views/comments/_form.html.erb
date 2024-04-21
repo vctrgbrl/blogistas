@@ -1,0 +1,7 @@
+<div>
+  <h5>Adicionar comentário</h5>
+  <%= form_with model: [@post,@post.comments.build]  do |form| %>
+    <%= form.text_field :body %>
+    <%= form.submit :comment %>
+  <% end %>
+</div>

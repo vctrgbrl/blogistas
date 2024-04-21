@@ -1,0 +1,7 @@
+<div>
+  <ul>
+    <% @comments.each do |comment| %>
+      <li><%= comment.body %> <span><%= comment.user_id %></span></li>
+    <% end %>
+  </ul>
+</div>

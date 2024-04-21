@@ -17,23 +17,17 @@
   </div>
 
   <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.text_field :body %>
+    <%= form.file_field :thumbnail %>
   </div>
-  <script>
-      var editor = new EditorJS({
-          holder: 'editorjs',
-          tools: {
-              header: Header,
-              quote: Quote,
-          }
-      });
-  </script>
 
+  <div>
+    <%= form.label :content, style: "display: block" %>
+    <%= form.rich_text_area :content %>
+  </div>
   <script defer="true" type="text/javascript" charset="utf-8">
     document.getElementById("post").onsubmit = async function handleOnSubmit(e) {
-        let data = await editor.save();
-        console.log(data);
+        // let data = await editor.save();
+        // console.log(data);
     };
   </script>
 

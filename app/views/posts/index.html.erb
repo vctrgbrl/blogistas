@@ -4,11 +4,7 @@
 
 <div id="posts">
   <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+    <%= render 'card', post: post %>
   <% end %>
 </div>
 <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
-<%= link_to "New post", new_post_path %>

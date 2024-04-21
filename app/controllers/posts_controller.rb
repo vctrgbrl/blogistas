@@ -1,11 +1,14 @@
 class PostsController < ApplicationController
   include Pagy::Backend
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :check_if_owns?, except: [:index, :new, :create]
+  before_action :redirect_if_not_owns, except: [:index, :show, :new, :create]
 
   # GET /posts or /posts.json
   def index
     # page = params[:page].to_i
-    @pagy, @posts = pagy(Post.all)
+    @pagy, @posts = pagy(Post.order("created_at DESC"))
     # @posts = Post.order(:created_at).limit(3).offset(3*page)
   end
 
@@ -25,7 +28,9 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+
+
+    @post = Post.new(post_params.merge(user_id: current_user.id))
     @comments = @post.comments.all
 
     respond_to do |format|
@@ -70,6 +75,14 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body)
+      params.require(:post).permit(:title, :content, :thumbnail)
+    end
+
+    def check_if_owns?
+      @user_owns = current_user.id == @post.user_id if current_user != nil
+    end
+
+    def redirect_if_not_owns
+      redirect_to posts_path unless @user_owns
     end
 end

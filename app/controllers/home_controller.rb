@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render
+    redirect_to posts_path
   end
 end
