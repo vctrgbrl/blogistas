@@ -1,12 +1,15 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @post %>
-
-<!--<div>-->
-<!--  <%#= link_to "Edit this post", edit_post_path(@post) if @user_owns %> |-->
+<div class="d-flex">
+  <%= link_to edit_post_path(@post) do %>
+  <button class="btn btn-primary m-2">Editar publicação</button>
+  <% end if @user_owns%>
   <%#= link_to "Back to posts", posts_path %>
 
-  <%#= button_to "Destroy this post", @post, method: :delete if @user_owns %>
-<!--</div>-->
+  <%= button_to "Apagar publicação", @post, method: :delete, class: "btn btn-danger m-2" if @user_owns %>
+</div>
+<%= render @post %>
 <%= render "comments/form" %>
 <%= render "comments/index" %>
+<div style="height: 100px;">
+
+</div>

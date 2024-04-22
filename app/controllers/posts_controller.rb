@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :check_if_owns?, except: [:index, :new, :create]
   before_action :redirect_if_not_owns, except: [:index, :show, :new, :create]
+  before_action :load_tags, except: [:new, :create, :destroy, :index]
 
   # GET /posts or /posts.json
   def index
@@ -28,8 +29,6 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-
-
     @post = Post.new(post_params.merge(user_id: current_user.id))
     @comments = @post.comments.all
 
@@ -46,6 +45,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    @post.tags.clear
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
@@ -75,7 +75,20 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :thumbnail)
+      p = params.require(:post).permit(:title, :content, :thumbnail, :snippet, tags: [])
+      if p[:tags] == nil or p[:tags].empty?
+        return p
+      end
+      c = p[:tags].map do |tag_name|
+        t = Tag.find_by(name: tag_name)
+        if not t.nil?
+          t
+        else
+          Tag.create(name: tag_name)
+        end
+      end
+      p[:tags] = c
+      p
     end
 
     def check_if_owns?
@@ -84,5 +97,8 @@ class PostsController < ApplicationController
 
     def redirect_if_not_owns
       redirect_to posts_path unless @user_owns
+    end
+    def load_tags
+      @tags = @post.tags.all
     end
 end

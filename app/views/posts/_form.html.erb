@@ -17,8 +17,36 @@
   </div>
 
   <div>
+    <label for="tags">Tags</label>
+    <div class="container" id="tags-added">
+      <% @tags.each do |tag| %>
+        <div id=<%="tag-" + tag.name %>>
+          <input name="post[tags][]" style="display: none;" value=<%= tag.name %>/>
+          <span class="badge bg-primary">
+            <%= tag.name %>
+            <button type="button" class="btn btn-danger" onclick="(() => RemoveTag('<%= tag.name %>'))()">-</button>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <input type="text" class="form-control" id="tags"/>
+      </div>
+      <div class="col">
+        <button type="button" onclick="AdicionarTag()" class="btn btn-primary">Adicionar</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
     <%= form.label :thumbnail, "Thumbnail" %>
     <%= form.file_field :thumbnail, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :snippet, "Trecho da publicação" %>
+    <%= form.text_field :snippet, class: "form-control" %>
   </div>
 
   <div>
@@ -30,7 +58,7 @@
     <%= form.label :content, style: "display: block" %>
     <%= form.rich_text_area :content, class: "form-control"%>
   </div>
-  <script defer="true" type="text/javascript" charset="utf-8">
+  <script defer type="text/javascript" charset="utf-8">
     function OnLoad(event) {
         const converter = new showdown.Converter();
         const html = converter.makeHtml(event.target.result);
@@ -43,6 +71,39 @@
         reader.onload = OnLoad;
         reader.readAsText(this.files[0]);
     });
+  </script>
+  <script type="text/javascript" charset="utf-8">
+    var doc = document.getElementById("tags");
+    var d = document.getElementById("tags-added");
+    var tag_set = new Set();
+    function AdicionarTag() {
+        var tag = doc.value.trim().split(" ").map(s => s[0].toUpperCase() + s.slice(1)).join("");
+        if (tag_set.has(tag)) return;
+        tag_set.add(tag);
+        var di = document.createElement("div");
+        var s = document.createElement("input");
+        s.type = "text";
+        s.name = "post[tags][]";
+        s.value = tag;
+        s.style = "display: none;"
+        di.appendChild(s);
+        var el = document.createElement("span");
+        var b = document.createElement("button");
+        b.textContent = "-";
+        b.className = "btn btn-danger";
+        el.className = "badge bg-primary"
+        el.textContent = tag;
+        di.id = "tag-" + tag;
+        di.appendChild(el);
+        b.onclick = () => RemoveTag(tag);
+        el.appendChild(b);
+        d.appendChild(di);
+    }
+
+    function RemoveTag(tagName) {
+        tag_set.delete(tagName);
+        document.getElementById("tag-" + tagName).remove();
+    }
   </script>
 
   <div>

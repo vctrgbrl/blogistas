@@ -1,4 +1,4 @@
-<div class="card mb-3" style="max-width: 540px;">
+<div class="card mb-3" style="max-width: 660px;">
   <%= link_to post, style: "text-decoration: none; color: inherit;" do %>
   <div class="row g-0">
     <div class="col-sm-4">
@@ -8,7 +8,8 @@
       <div class="card-body">
         <h5 class="card-title"><%= post.title %></h5>
         <p class="card-text">
-          Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+          <%= post.snippet[0..100] if !!post.snippet %>
+          <%= "..." if !!post.snippet and post.snippet.length > 100 %>
         </p>
         <p class="card-text">
           <small class="text-body-secondary">
