@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :check_if_owns?, except: [:index, :new, :create]
   before_action :redirect_if_not_owns, except: [:index, :show, :new, :create]
-  before_action :load_tags, except: [:new, :create, :destroy, :index]
+  before_action :load_tags, only: [:edit, :show, :update, :destroy]
 
   # GET /posts or /posts.json
   def index
@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @tags = []
   end
 
   # GET /posts/1/edit

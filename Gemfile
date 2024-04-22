@@ -74,3 +74,9 @@ end
 # pagination Gem
 gem 'pagy', '~> 8.2', '>= 8.2.2'
 gem "devise", "~> 4.9"
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "pg", "~> 1.5"
+
+gem "redis", "~> 5.2"
