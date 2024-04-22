@@ -18,13 +18,13 @@
 
   <div>
     <label for="tags">Tags</label>
-    <div class="container" id="tags-added">
+    <div class="container d-flex" id="tags-added">
       <% @tags.each do |tag| %>
         <div id=<%="tag-" + tag.name %>>
           <input name="post[tags][]" style="display: none;" value=<%= tag.name %>/>
-          <span class="badge bg-primary">
+          <span class="badge bg-primary m-2 ">
             <%= tag.name %>
-            <button type="button" class="btn btn-danger" onclick="(() => RemoveTag('<%= tag.name %>'))()">-</button>
+              <i class="bi bi-x-lg ml-1" onclick="(() => RemoveTag('<%= tag.name %>'))()"></i>
           </span>
         </div>
       <% end %>
@@ -88,10 +88,9 @@
         s.style = "display: none;"
         di.appendChild(s);
         var el = document.createElement("span");
-        var b = document.createElement("button");
-        b.textContent = "-";
-        b.className = "btn btn-danger";
-        el.className = "badge bg-primary"
+        var b = document.createElement("i");
+        b.className = "bi bi-x-lg ml-1";
+        el.className = "badge bg-primary m-2"
         el.textContent = tag;
         di.id = "tag-" + tag;
         di.appendChild(el);

@@ -80,3 +80,5 @@ gem "dockerfile-rails", ">= 1.6", :group => :development
 gem "pg", "~> 1.5"
 
 gem "redis", "~> 5.2"
+
+gem "certified", "~> 1.0"
