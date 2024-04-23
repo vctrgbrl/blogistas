@@ -7,10 +7,8 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id if current_user != nil
     respond_to do |format|
       if @comment.save
-        puts "saved"
         format.html {redirect_to post_url(post), notice: "Comentário adicionado" }
       else
-        puts "algum erro"
         format.html {render post_url(post) }
       end
     end

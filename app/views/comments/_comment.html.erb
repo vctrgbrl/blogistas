@@ -1,3 +1,11 @@
 <p>
-  <%= comment.body %>
+<hr/>
+  <p class="text-body">
+    <%= comment["body"] %>
+  </p>
+  <small class="text-body-secondary">
+    <%= time_ago_in_words comment["created_at"] %>
+     |
+    <%= comment[:user_email] != nil ? comment[:user_email] : "Anônimo"%>
+  </small>
 </p>

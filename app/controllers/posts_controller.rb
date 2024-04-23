@@ -15,7 +15,15 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @comments = @post.comments.all
+    com = @post.comments.all
+    @comments = com.map do |c|
+      d = c.attributes
+      user = User.where(id: c[:user_id])[0]
+      if user != nil
+        d[:user_email] = user.email
+      end
+      d
+    end
   end
 
   # GET /posts/new
