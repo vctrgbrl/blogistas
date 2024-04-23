@@ -1,12 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Posts</h1>
+<h1 style="text-align: center">Publicações</h1>
 
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render 'card', post: post %>
-  <% end %>
-</div>
-<div class="pag-bar mt-5 pt-5">
-  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+<div>
+  <div id="posts" style="max-width: 660px; margin: 0 auto; text-align: center;">
+    <% @posts.each do |post| %>
+      <%= render 'card', post: post %>
+    <% end %>
+  </div>
+  <div class="pag-bar mt-5 pt-5 d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  </div>
 </div>
