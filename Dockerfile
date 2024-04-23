@@ -39,6 +39,12 @@ COPY --link . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
+#RUN mv config/credentials.yml.enc config/credentials.yml.enc.backup; \
+#  mv config/credentials.yml.enc.sample config/credentials.yml.enc; \
+#  mv config/master.key.sample config/master.key; \
+#  bundle exec rails assets:precompile; \
+#  mv config/credentials.yml.enc.backup config/credentials.yml.enc; \
+#  rm config/master.key;
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
