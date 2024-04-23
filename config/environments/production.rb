@@ -102,4 +102,5 @@ Rails.application.configure do
     port: Rails.application.credentials[:mailer][:port],
     authentication: Rails.application.credentials[:mailer][:plain],
   }
+  config.active_storage.service = :google
 end
